@@ -269,7 +269,14 @@ public class OSSUtils {
         for (PartETag partETag : partETagList) {
             builder.append("<Part>\n");
             builder.append("<PartNumber>" + partETag.getPartNumber() + "</PartNumber>\n");
-            builder.append("<ETag>" + partETag.getETag() + "</ETag>\n");
+
+            //兼容官方OSS模拟器
+            if(partETag.getETag() == null || partETag.getETag().equals("")) {
+                builder.append("<ETag>\"\"</ETag>\n");
+            }
+            else {
+                builder.append("<ETag>" + partETag.getETag() + "</ETag>\n");
+            }
             builder.append("</Part>\n");
         }
         builder.append("</CompleteMultipartUpload>\n");

@@ -37,13 +37,14 @@ import java.util.concurrent.TimeUnit;
 public abstract class BaseMultipartUploadTask<Request extends MultipartUploadRequest,
         Result extends CompleteMultipartUploadResult> implements Callable<Result> {
 
-    protected final int CPU_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-    protected final int MAX_CORE_POOL_SIZE = CPU_SIZE < 5 ? CPU_SIZE : 5;
-    protected final int MAX_IMUM_POOL_SIZE = CPU_SIZE;
+//    protected final int CPU_SIZE = Runtime.getRuntime().availableProcessors() * 2;
+//    protected final int MAX_CORE_POOL_SIZE = CPU_SIZE < 5 ? CPU_SIZE : 5;
+//    protected final int MAX_IMUM_POOL_SIZE = CPU_SIZE;
     protected final int KEEP_ALIVE_TIME = 3000;
     protected final int MAX_QUEUE_SIZE = 5000;
+    //根据业务需要，这里强制修改为1个线程
     protected ThreadPoolExecutor mPoolExecutor =
-            new ThreadPoolExecutor(MAX_CORE_POOL_SIZE, MAX_IMUM_POOL_SIZE, KEEP_ALIVE_TIME,
+            new ThreadPoolExecutor(1/*MAX_CORE_POOL_SIZE*/, 1/*MAX_IMUM_POOL_SIZE*/, KEEP_ALIVE_TIME,
                     TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(MAX_QUEUE_SIZE), new ThreadFactory() {
                 @Override
                 public Thread newThread(Runnable runnable) {

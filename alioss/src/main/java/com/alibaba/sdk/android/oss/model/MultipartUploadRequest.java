@@ -11,7 +11,8 @@ public class MultipartUploadRequest<T extends MultipartUploadRequest> extends OS
     protected String uploadId;
 
     protected String uploadFilePath;
-    protected long partSize = 256 * 1024;
+    //业务需要，256修改为150
+    protected long partSize = 150 * 1024;
 
     protected ObjectMetadata metadata;
 
