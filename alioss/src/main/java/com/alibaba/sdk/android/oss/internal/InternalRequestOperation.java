@@ -17,6 +17,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.utils.BinaryUtil;
 import com.alibaba.sdk.android.oss.common.utils.CRC64;
 import com.alibaba.sdk.android.oss.common.utils.DateUtil;
+import com.alibaba.sdk.android.oss.common.OSSEventListener;
 import com.alibaba.sdk.android.oss.common.utils.HttpHeaders;
 import com.alibaba.sdk.android.oss.common.utils.HttpUtil;
 import com.alibaba.sdk.android.oss.common.utils.OSSUtils;
@@ -123,6 +124,10 @@ public class InternalRequestOperation {
                         return HttpsURLConnection.getDefaultHostnameVerifier().verify(endpoint.getHost(), session);
                     }
                 });
+
+        if(OSSEventListener.getFactory() != null) {
+            builder.eventListenerFactory(OSSEventListener.getFactory());
+        }
 
         if (conf != null) {
             Dispatcher dispatcher = new Dispatcher();
