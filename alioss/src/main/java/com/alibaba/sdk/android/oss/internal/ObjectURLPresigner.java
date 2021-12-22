@@ -105,7 +105,10 @@ public class ObjectURLPresigner {
         String host = endpoint.getHost();
         try {
             if(!TextUtils.isEmpty(bucketName)) {
-                if(OSSUtils.isValidateIP(host)) {
+                if(OSSUtils.isOssOriginHost(endpoint.getHost())) {
+                    host = bucketName + "." + endpoint.getHost();
+                }
+                else if(OSSUtils.isValidateIP(host)) {
                     host = endpoint.toString() + ("/" + bucketName);
                     if(!endpoint.getScheme().isEmpty()) {
                         host = host.substring(endpoint.getScheme().length() + 3);
@@ -113,6 +116,9 @@ public class ObjectURLPresigner {
                 }
                 else if (!OSSUtils.isCname(host) || OSSUtils.isInCustomCnameExcludeList(host, conf.getCustomCnameExcludeList())) {
                     host = bucketName + "." + host;
+                }
+                else {
+                    host = host + "/" + bucketName;
                 }
             }
         }
