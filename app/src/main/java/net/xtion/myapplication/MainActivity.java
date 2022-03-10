@@ -27,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
         ClientConfiguration conf = new ClientConfiguration();
 
         //访问地址
-        String endpoint = "";
+        String endpoint = "https://dlcrm.daligroup.com:1999";
 
         client = new OSSClient(this, endpoint, new OSSCredentialProvider() {
             @Override
             public OSSFederationToken getFederationToken() throws ClientException {
                 //认证数据
-                return new OSSFederationToken("", "" , "" ,"");
+                return new OSSFederationToken("test", "test" , "test" ,"2099-01-01T00:00:00Z");
             }
         }, conf);
 
-        String bucket = ""; //
-        String objectKey = ""; //
-        byte[] fileByte = "测试内容".getBytes(StandardCharsets.UTF_8);
+        final String bucket = "112"; //
+        final String objectKey = "3333"; //
+        final byte[] fileByte = "测试内容".getBytes(StandardCharsets.UTF_8);
 
         final PutObjectRequest put = new PutObjectRequest(bucket, objectKey, fileByte);
 
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     PutObjectResult result = client.putObject(put);
+
+                    //client.presignConstrainedObjectURL(bucket, objectKey, 60 * 60);
+
                     Log.i("","");
                 }
                 catch (Exception e) {

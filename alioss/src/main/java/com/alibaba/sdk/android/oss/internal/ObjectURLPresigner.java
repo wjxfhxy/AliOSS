@@ -117,6 +117,10 @@ public class ObjectURLPresigner {
                 else if (!OSSUtils.isCname(host) || OSSUtils.isInCustomCnameExcludeList(host, conf.getCustomCnameExcludeList())) {
                     host = bucketName + "." + host;
                 }
+                else if(endpoint.getPort() > -1) {
+
+                    host = host + ":" + String.format("%d", endpoint.getPort()) + "/" + bucketName;
+                }
                 else {
                     host = host + "/" + bucketName;
                 }
