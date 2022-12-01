@@ -287,6 +287,9 @@ public class RequestMessage extends HttpMessage {
 
         getHeaders().put(OSSHeaders.HOST, originHost);
 
+        // add connection close
+        getHeaders().put(OSSHeaders.CONNECTION, "close");
+
         String baseURL = scheme + "://" + urlHost;
         String queryString = OSSUtils.paramToQueryString(this.parameters, OSSConstants.DEFAULT_CHARSET_NAME);
 
@@ -335,6 +338,9 @@ public class RequestMessage extends HttpMessage {
                     OSSLog.logDebug("[buildCannonicalURL], disable httpdns");
                 }
                 addHeader(OSSHeaders.HOST, originHost);
+
+                // add connection close
+                addHeader(OSSHeaders.CONNECTION, "close");
 
                 if (!TextUtils.isEmpty(urlHost)) {
                     baseURL = scheme + "://" + urlHost;

@@ -27,5 +27,6 @@ public interface HttpHeaders {
     public static final String RANGE = "Range";
     public static final String LOCATION = "Location";
     public static final String USER_AGENT = "User-Agent";
+    public static final String CONNECTION = "Connection";
 
 }
